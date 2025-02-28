@@ -11,9 +11,10 @@ const AddPlant = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const [uploadButtonText, setUploadButtonText] = useState({
+  const [uploadImage, setUploadImage] = useState({
     name: "Upload Image",
     size: null,
+    url: null,
   });
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +37,19 @@ const AddPlant = () => {
 
       const truncatedFileName = truncateFileName(file.name);
       const sizeInKB = Math.ceil(file.size / 1024);
-      setUploadButtonText({ name: truncatedFileName, size: sizeInKB });
+
+      const formattedSize =
+        sizeInKB >= 1024
+          ? `${(sizeInKB / 1024).toFixed(2)} MB`
+          : `${sizeInKB} KB`;
+
+      const imagePreviewURL = URL.createObjectURL(file);
+
+      setUploadImage({
+        name: truncatedFileName,
+        size: formattedSize,
+        url: imagePreviewURL,
+      });
     }
   };
 
@@ -78,7 +91,7 @@ const AddPlant = () => {
       form.reset();
 
       // Reset state
-      setUploadButtonText({ name: "Upload Image", size: null });
+      setUploadImage({ name: "Upload Image", size: null, url: null });
     } catch (err) {
       console.log(err);
     } finally {
@@ -94,7 +107,7 @@ const AddPlant = () => {
       {/* Form */}
       <AddPlantForm
         handleSubmit={handleSubmit}
-        uploadButtonText={uploadButtonText}
+        uploadImage={uploadImage}
         handleFileChange={handleFileChange}
         loading={loading}
       />
