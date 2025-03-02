@@ -6,36 +6,85 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Button from "../Shared/Button/Button";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const PurchaseModal = ({ closeModal, isOpen, plant }) => {
-  const { category, price, name, quantity } = plant;
+const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { category, price, name, quantity, seller, _id } = plant;
   const [totalQuantity, setTotalQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price);
-  const { user } = useAuth();
+  const [purchaseInfo, setPurchaseInfo] = useState({
+    customer: {},
+    plantId: _id,
+    price: totalPrice,
+    quantity: totalQuantity,
+    seller: seller?.email,
+    address: "",
+    status: "Pending",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setPurchaseInfo((prev) => ({
+        ...prev,
+        customer: {
+          name: user.displayName,
+          email: user.email,
+          image: user.photoURL,
+        },
+      }));
+    }
+  }, [user]);
 
   const handleQuantity = (value) => {
     if (value < 0) {
       setTotalQuantity(1);
       setTotalPrice(1 * price);
+      setPurchaseInfo((prev) => {
+        return { ...prev, quantity: 1, price: price };
+      });
       return toast.error("Quantity cannot be less than 1");
     }
 
     if (value > quantity) {
       setTotalQuantity(quantity);
       setTotalPrice(quantity * price);
+      setPurchaseInfo((prev) => {
+        return { ...prev, quantity: quantity, price: quantity * price };
+      });
       return toast.error("Quantity exceeds available stock!");
     }
 
     setTotalQuantity(value);
     setTotalPrice(value * price);
+    setPurchaseInfo((prev) => {
+      return { ...prev, quantity: value, price: value * price };
+    });
   };
 
   const handlePurchase = async () => {
-    // TODO
+    // console.table(purchaseInfo);
+
+    try {
+      // save data in db
+      await axiosSecure.post("/order", purchaseInfo);
+      console.table(purchaseInfo);
+      // decrease quantity from plant collection
+      await axiosSecure.patch(`/plants/quantity/${_id}`, {
+        quantityToUpdate: totalQuantity,
+      });
+      refetch();
+      toast.success("Order Successful!");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      closeModal();
+    }
   };
 
   return (
@@ -117,6 +166,11 @@ const PurchaseModal = ({ closeModal, isOpen, plant }) => {
                     name="address"
                     id="address"
                     type="text"
+                    onChange={(e) =>
+                      setPurchaseInfo((prev) => {
+                        return { ...prev, address: e.target.value };
+                      })
+                    }
                     placeholder="Shipping Address.."
                     required
                   />

@@ -12,7 +12,11 @@ import { useState } from "react";
 const PlantDetails = () => {
   let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const { data: plant, isLoading } = useQuery({
+  const {
+    data: plant,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["plant", id],
     queryFn: async () => {
       const { data } = await axios(
@@ -107,6 +111,7 @@ const PlantDetails = () => {
             plant={plant}
             closeModal={closeModal}
             isOpen={isOpen}
+            refetch={refetch}
           />
         </div>
       </div>
