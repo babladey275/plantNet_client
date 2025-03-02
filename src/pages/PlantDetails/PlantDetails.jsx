@@ -6,8 +6,11 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import PurchaseModal from "../../components/Modal/PurchaseModal";
+import { useState } from "react";
 
 const PlantDetails = () => {
+  let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const { data: plant, isLoading } = useQuery({
     queryKey: ["plant", id],
@@ -22,6 +25,10 @@ const PlantDetails = () => {
   if (isLoading) return <LoadingSpinner />;
 
   const { category, description, image, price, name, seller, quantity } = plant;
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <Container>
@@ -88,10 +95,19 @@ const PlantDetails = () => {
           <div className="flex justify-between">
             <p className="font-bold text-3xl text-gray-500">Price: {price}$</p>
             <div>
-              <Button label={quantity > 0 ? "Purchase" : "Out of Stock"} />
+              <Button
+                onClick={() => setIsOpen(true)}
+                label={quantity > 0 ? "Purchase" : "Out of Stock"}
+              />
             </div>
           </div>
           <hr className="my-6" />
+
+          <PurchaseModal
+            plant={plant}
+            closeModal={closeModal}
+            isOpen={isOpen}
+          />
         </div>
       </div>
     </Container>
