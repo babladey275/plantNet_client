@@ -73,7 +73,7 @@ const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
     try {
       // save data in db
       await axiosSecure.post("/order", purchaseInfo);
-      console.table(purchaseInfo);
+
       // decrease quantity from plant collection
       await axiosSecure.patch(`/plants/quantity/${_id}`, {
         quantityToUpdate: totalQuantity,

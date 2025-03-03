@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AddPlant from "../pages/Dashboard/Seller/AddPlant";
 import PlantDetails from "../pages/PlantDetails/PlantDetails";
+import MyOrders from "../pages/Dashboard/Customer/MyOrders";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddPlant />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-orders",
+        element: (
+          <PrivateRoute>
+            <MyOrders />
           </PrivateRoute>
         ),
       },
