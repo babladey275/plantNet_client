@@ -9,6 +9,8 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AddPlant from "../pages/Dashboard/Seller/AddPlant";
 import PlantDetails from "../pages/PlantDetails/PlantDetails";
 import MyOrders from "../pages/Dashboard/Customer/MyOrders";
+import Profile from "../pages/Dashboard/Common/Profile";
+import SellerRoute from "./SellerRoute";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +42,9 @@ export const router = createBrowserRouter([
         path: "add-plant",
         element: (
           <PrivateRoute>
-            <AddPlant />
+            <SellerRoute>
+              <AddPlant />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -49,6 +53,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyOrders />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
           </PrivateRoute>
         ),
       },
