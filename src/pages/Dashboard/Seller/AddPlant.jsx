@@ -6,10 +6,12 @@ import { useState } from "react";
 
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 
 const AddPlant = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const [uploadImage, setUploadImage] = useState({
     name: "Upload Image",
@@ -92,6 +94,7 @@ const AddPlant = () => {
 
       // Reset state
       setUploadImage({ name: "Upload Image", size: null, url: null });
+      navigate("/dashboard/my-inventory");
     } catch (err) {
       console.log(err);
     } finally {

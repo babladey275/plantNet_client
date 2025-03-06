@@ -14,6 +14,7 @@ import SellerRoute from "./SellerRoute";
 import Statistics from "../pages/Dashboard/Common/Statistics";
 import AdminRoute from "./AdminRoute";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import MyInventory from "../pages/Dashboard/Seller/MyInventory";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +66,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <SellerRoute>
               <AddPlant />
+            </SellerRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-inventory",
+        element: (
+          <PrivateRoute>
+            <SellerRoute>
+              <MyInventory />
             </SellerRoute>
           </PrivateRoute>
         ),
