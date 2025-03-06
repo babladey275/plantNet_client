@@ -8,7 +8,11 @@ import useAuth from "../../../hooks/useAuth";
 const ManageUsers = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: users = [], isLoading } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["users", user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(`/all-users/${user?.email}`);
@@ -59,7 +63,11 @@ const ManageUsers = () => {
                 </thead>
                 <tbody>
                   {users.map((userData) => (
-                    <UserDataRow key={userData._id} userData={userData} />
+                    <UserDataRow
+                      key={userData._id}
+                      userData={userData}
+                      refetch={refetch}
+                    />
                   ))}
                 </tbody>
               </table>
