@@ -15,6 +15,7 @@ import Statistics from "../pages/Dashboard/Common/Statistics";
 import AdminRoute from "./AdminRoute";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import MyInventory from "../pages/Dashboard/Seller/MyInventory";
+import ManageOrders from "../pages/Dashboard/Seller/ManageOrders";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <SellerRoute>
               <MyInventory />
+            </SellerRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-orders",
+        element: (
+          <PrivateRoute>
+            <SellerRoute>
+              <ManageOrders />
             </SellerRoute>
           </PrivateRoute>
         ),
