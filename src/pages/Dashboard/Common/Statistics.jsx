@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import { Navigate } from "react-router-dom";
+import AdminStatistics from "../../../components/Dashboard/Statistics/AdminStatistics";
 const Statistics = () => {
   const [role, isLoading] = useRole();
   if (isLoading) return <LoadingSpinner />;
@@ -14,7 +15,7 @@ const Statistics = () => {
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      {/* {role === "Admin" && <AdminStatistics />} */}
+      {role === "Admin" && <AdminStatistics />}
     </div>
   );
 };

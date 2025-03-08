@@ -8,10 +8,14 @@ import axios from "axios";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import PurchaseModal from "../../components/Modal/PurchaseModal";
 import { useState } from "react";
+import useRole from "../../hooks/useRole";
+import useAuth from "../../hooks/useAuth";
 
 const PlantDetails = () => {
-  let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
+  const [role] = useRole();
+  const { user } = useAuth();
+  let [isOpen, setIsOpen] = useState(false);
   const {
     data: plant,
     isLoading,
@@ -100,6 +104,12 @@ const PlantDetails = () => {
             <p className="font-bold text-3xl text-gray-500">Price: {price}$</p>
             <div>
               <Button
+                disabled={
+                  !user ||
+                  user?.email === seller?.email ||
+                  role != "Customer" ||
+                  quantity === 0
+                }
                 onClick={() => setIsOpen(true)}
                 label={quantity > 0 ? "Purchase" : "Out of Stock"}
               />
