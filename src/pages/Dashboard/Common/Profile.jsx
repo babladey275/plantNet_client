@@ -69,9 +69,9 @@ const Profile = () => {
                 >
                   Update Profile
                 </button>
-                <button className="bg-lime-500 px-7 py-1 rounded-lg text-black cursor-pointer hover:bg-lime-800">
+                {/* <button className="bg-lime-500 px-7 py-1 rounded-lg text-black cursor-pointer hover:bg-lime-800">
                   Change Password
-                </button>
+                </button> */}
               </div>
               <div>
                 <UpdateProfileModal

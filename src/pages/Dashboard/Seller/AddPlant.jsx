@@ -96,7 +96,7 @@ const AddPlant = () => {
       setUploadImage({ name: "Upload Image", size: null, url: null });
       navigate("/dashboard/my-inventory");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
     }

@@ -40,7 +40,7 @@ const UpdateProfileForm = ({ userData, refetch, setIsOpen }) => {
       refetch();
       toast.success("Profile updated successfully!");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(
         error?.response?.data ||
           "There was an error updating the profile. Please try again."

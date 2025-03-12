@@ -20,7 +20,7 @@ const MyInventory = () => {
   });
 
   if (isLoading) return <LoadingSpinner />;
-  console.log(plants);
+  // console.log(plants);
   return (
     <>
       <Helmet>

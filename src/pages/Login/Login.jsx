@@ -28,7 +28,6 @@ const Login = () => {
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      console.log(err);
       toast.error(err?.message);
     }
   };
@@ -40,12 +39,10 @@ const Login = () => {
       const data = await signInWithGoogle();
       // save user info in db if the user is new
       await saveUser(data?.user);
-      console.log(data?.user);
 
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      console.log(err);
       toast.error(err?.message);
     }
   };

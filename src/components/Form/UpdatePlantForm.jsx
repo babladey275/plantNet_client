@@ -46,7 +46,7 @@ const UpdatePlantForm = ({ plant, refetch, setIsEditModalOpen }) => {
       refetch();
       toast.success("Plant updated successfully!");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(
         error?.response?.data ||
           "There was an error updating the plant. Please try again."

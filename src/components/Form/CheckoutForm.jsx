@@ -17,8 +17,6 @@ const CheckoutForm = ({ purchaseInfo, refetch, closeModal, totalQuantity }) => {
     getPaymentIntent();
   }, [purchaseInfo]);
 
-  console.log(clientSecret);
-
   const getPaymentIntent = async () => {
     try {
       const { data } = await axiosSecure.post("/create-payment-intent", {
@@ -27,7 +25,7 @@ const CheckoutForm = ({ purchaseInfo, refetch, closeModal, totalQuantity }) => {
       });
       setClientSecret(data.clientSecret);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -67,7 +65,7 @@ const CheckoutForm = ({ purchaseInfo, refetch, closeModal, totalQuantity }) => {
       );
       return;
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      // console.log("[PaymentMethod]", paymentMethod);
     }
 
     // confirm payment

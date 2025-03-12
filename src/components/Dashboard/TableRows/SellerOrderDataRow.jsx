@@ -33,7 +33,7 @@ const SellerOrderDataRow = ({ orderData, refetch }) => {
 
   const handleStatus = async (newStatus) => {
     if (status === newStatus) return;
-    console.log(newStatus);
+    // console.log(newStatus);
     try {
       await axiosSecure.patch(`/orders/${_id}`, {
         status: newStatus,

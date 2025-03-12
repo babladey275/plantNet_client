@@ -22,7 +22,7 @@ const ManageOrders = () => {
   });
 
   if (isLoading) return <LoadingSpinner />;
-  console.log(orders);
+  // console.log(orders);
   return (
     <>
       <Helmet>
