@@ -3,9 +3,25 @@ import coverImg from "../../../assets/images/cover.jpg";
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import { useState } from "react";
+import UpdateProfileModal from "../../../components/Modal/UpdateProfileModal";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 const Profile = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [role, isLoading] = useRole();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { data: userData = {}, refetch } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      if (user?.email) {
+        const res = await axiosSecure.get(`/users/${user.email}`);
+        return res.data;
+      }
+    },
+  });
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -24,7 +40,7 @@ const Profile = () => {
           <a href="#" className="relative block">
             <img
               alt="profile"
-              src={user.photoURL}
+              src={userData.image}
               className="mx-auto object-cover rounded-full h-24 w-24  border-2 border-white "
             />
           </a>
@@ -39,22 +55,31 @@ const Profile = () => {
             <div className="flex flex-wrap items-center justify-between text-sm text-gray-600 ">
               <p className="flex flex-col">
                 Name
-                <span className="font-bold text-black ">
-                  {user.displayName}
-                </span>
+                <span className="font-bold text-black ">{userData.name}</span>
               </p>
               <p className="flex flex-col">
                 Email
-                <span className="font-bold text-black ">{user.email}</span>
+                <span className="font-bold text-black ">{userData.email}</span>
               </p>
 
               <div>
-                <button className="bg-lime-500 px-10 py-1 rounded-lg text-black cursor-pointer hover:bg-lime-800 block mb-1">
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="bg-lime-500 px-10 py-1 rounded-lg text-black cursor-pointer hover:bg-lime-800 block mb-1"
+                >
                   Update Profile
                 </button>
                 <button className="bg-lime-500 px-7 py-1 rounded-lg text-black cursor-pointer hover:bg-lime-800">
                   Change Password
                 </button>
+              </div>
+              <div>
+                <UpdateProfileModal
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  userData={userData}
+                  refetch={refetch}
+                />
               </div>
             </div>
           </div>
