@@ -7,8 +7,9 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { Fragment } from "react";
+import UpdatePlantForm from "../Form/UpdatePlantForm";
 
-const UpdatePlantModal = ({ setIsEditModalOpen, isOpen }) => {
+const UpdatePlantModal = ({ setIsEditModalOpen, isOpen, plant, refetch }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -46,7 +47,13 @@ const UpdatePlantModal = ({ setIsEditModalOpen, isOpen }) => {
                 >
                   Update Plant Info
                 </DialogTitle>
-                <div className="mt-2 w-full">{/* <UpdatePlantForm /> */}</div>
+                <div className="mt-2 w-full">
+                  <UpdatePlantForm
+                    plant={plant}
+                    refetch={refetch}
+                    setIsEditModalOpen={setIsEditModalOpen}
+                  />
+                </div>
                 <hr className="mt-8 " />
                 <div className="mt-2 ">
                   <button
@@ -69,6 +76,8 @@ const UpdatePlantModal = ({ setIsEditModalOpen, isOpen }) => {
 UpdatePlantModal.propTypes = {
   setIsEditModalOpen: PropTypes.func,
   isOpen: PropTypes.bool,
+  plant: PropTypes.object,
+  refetch: PropTypes.func,
 };
 
 export default UpdatePlantModal;
