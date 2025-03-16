@@ -44,7 +44,8 @@ const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
   }, [user]);
 
   const handleQuantity = (value) => {
-    if (value < 0) {
+    const quantityValue = parseInt(value);
+    if (quantityValue < 0) {
       setTotalQuantity(1);
       setTotalPrice(1 * price);
       setPurchaseInfo((prev) => {
@@ -53,7 +54,7 @@ const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
       return toast.error("Quantity cannot be less than 1");
     }
 
-    if (value > quantity) {
+    if (quantityValue > quantity) {
       setTotalQuantity(quantity);
       setTotalPrice(quantity * price);
       setPurchaseInfo((prev) => {
@@ -62,10 +63,10 @@ const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
       return toast.error("Quantity exceeds available stock!");
     }
 
-    setTotalQuantity(value);
-    setTotalPrice(value * price);
+    setTotalQuantity(quantityValue);
+    setTotalPrice(quantityValue * price);
     setPurchaseInfo((prev) => {
-      return { ...prev, quantity: value, price: value * price };
+      return { ...prev, quantity: quantityValue, price: quantityValue * price };
     });
   };
 
