@@ -1,8 +1,6 @@
 # PlantNet
 
-PlantNet is an e-commerce platform dedicated to plants. It offers an intuitive user interface for both customers and sellers. Customers can view plant details, place orders, and track their purchases. Sellers can manage their plant inventory, add new plants to the catalog, and process orders through a specialized dashboard.
-
-The application is built using **React** for the frontend, with a state management system based on **React Query** and an intuitive routing system using **React Router**. The app is styled using **Tailwind CSS** and powered by **Vite** for fast development and build processes.
+PlantNet is an e-commerce platform dedicated to plants, where customers can easily browse and purchase plants while sellers manage their inventory and orders through a dedicated dashboard. The platform features secure login/signup with Firebase Authentication, integrated Stripe for fast and secure payments, and a streamlined process for sellers to add, update, or delete plant listings. Admins have the ability to review and approve seller applications to maintain platform quality. Built with **React**, **React Query** for state management, **React Router** for navigation, and styled using **Tailwind CSS**. Powered by Vite for fast development and build processes.
 
 ---
 
@@ -93,3 +91,5 @@ Here’s a list of the major dependencies used in the project:
 **Password**: abc123
 
 **live link**: https://plantnet-de0a5.web.app/
+
+**Server Code**: https://github.com/babladey275/plantNet-server
